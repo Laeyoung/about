@@ -1,1 +1,2 @@
 # about
+AI like me
