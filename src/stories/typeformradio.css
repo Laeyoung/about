@@ -43,7 +43,7 @@ form {
   background: #fee8c3;
   color: #444;
   border-radius: 5px;
-  padding: 10px 20px;
+  padding: 10px 40px 10px 10px;
   border: 2px solid #fdd591;
   margin-bottom: 5px;
   cursor: pointer;
@@ -89,6 +89,7 @@ form {
   width: 20px;
   height: 20px;
 }
+
 @keyframes blink {
   0% {
     background-color: #fdcb77;
