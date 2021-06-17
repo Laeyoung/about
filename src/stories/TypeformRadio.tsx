@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import uuid from 'react-uuid';
+
 import './typeformradio.css';
 
 export interface TypeformRadioProps {
@@ -6,7 +8,7 @@ export interface TypeformRadioProps {
   borderColor?: string;
   items: string[];
   
-  onClick?: () => void;
+  onItemSelected?: (index: number, text: string) => void;
 }
 
 /**
@@ -16,19 +18,33 @@ export const TypeformRadio: React.FC<TypeformRadioProps> = ({
   backgroundColor = "#fee8c3",
   borderColor = "#fdd591",
   items = [],
-  ...props
+  onItemSelected,
 }) => {
+  const [selected, setSelected] = useState(-1);
 
+  const onChange = (event: React.FormEvent<HTMLFormElement>) => {
+    const index: number = parseInt((event.target as HTMLInputElement).value)
+    const text = items[index]
+
+    onItemSelected && onItemSelected(index, text)
+    setSelected(index)
+  }
 
   return (
-    <form>
+    <form onChange={onChange}>
       {
         items.map((item, index) => {
-          const id = `${index}`
+          const id = uuid()
 
           return (
-            <div className="radiobtn">
-              <input type="radio" id={id} name='typeform-radio' value={index}/>
+            <div className="radiobtn" key={id}>
+              <input
+                type="radio"
+                name='typeform-radio'
+                id={id}
+                value={index}
+                defaultChecked={selected === index}
+                disabled={selected >= 0 && selected !== index}/>
               <label htmlFor={id} style={{ backgroundColor, borderColor }}>{item}</label>
             </div>
           )

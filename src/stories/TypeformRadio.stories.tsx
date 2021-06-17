@@ -18,7 +18,10 @@ Primary.args = {
   items: [
     'In this tutorial, we will cover how to create a simple AngularJS project with three controllers.',
     'I\'m sorry for how quickly we all arrived in here.'
-  ]
+  ],
+  onItemSelected: (index, text) => {
+    console.log(index, text)
+  },
 };
 
 export const Secondary = Template.bind({});
@@ -31,5 +34,9 @@ Secondary.args = {
     'Answer_3',
     'Answer_4',
     'Answer_5',
-  ]
+  ],
+  onItemSelected: (index, text) => {
+    console.log(index, text)
+  },
 };
+
