@@ -2,6 +2,8 @@ import React from 'react';
 import './typeformradio.css';
 
 export interface TypeformRadioProps {
+  backgroundColor?: string;
+  borderColor?: string;
   items: string[];
   
   onClick?: () => void;
@@ -11,9 +13,13 @@ export interface TypeformRadioProps {
  * Primary UI component for user interaction
  */
 export const TypeformRadio: React.FC<TypeformRadioProps> = ({
-  items = ['In this tutorial, we will cover how to create a simple AngularJS project with three controllers.', 'I\'m sorry for how quickly we all arrived in here.'],
+  backgroundColor = "#fee8c3",
+  borderColor = "#fdd591",
+  items = [],
   ...props
 }) => {
+
+
   return (
     <form>
       {
@@ -22,8 +28,8 @@ export const TypeformRadio: React.FC<TypeformRadioProps> = ({
 
           return (
             <div className="radiobtn">
-              <input type="radio" id={id} name='typeform-radio' value={index} />
-              <label htmlFor={id}>{item}</label>
+              <input type="radio" id={id} name='typeform-radio' value={index}/>
+              <label htmlFor={id} style={{ backgroundColor, borderColor }}>{item}</label>
             </div>
           )
         })
