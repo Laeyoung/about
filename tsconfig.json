@@ -17,6 +17,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
+    "baseUrl": ".",
     "paths": {
       "@/components/*": ["components/*"],
       "@/styles/*": ["styles/*"]
