@@ -21,9 +21,14 @@ const IndexPage: NextPage = () => {
     const fetchData = async () => {
       const data = await fetchTeachableNLPInference(initText);
 
-      console.log(JSON.stringify(data));
+      const answers = (_.values(data) as string[]).map((answer) => {
+        const dotIndex = answer.indexOf('.');
+        return dotIndex > 0
+          ? answer.substr(0, answer.indexOf('.') + 1)
+          : answer;
+      });
 
-      setForm(_.values(data) as string[]);
+      setForm(answers);
     };
     fetchData();
   }, []);
@@ -45,7 +50,7 @@ const IndexPage: NextPage = () => {
           />
         )}
 
-        <Counter />
+        {/* <Counter />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -86,7 +91,7 @@ const IndexPage: NextPage = () => {
           >
             React Redux
           </a>
-        </span>
+        </span> */}
       </header>
     </div>
   );

@@ -6,13 +6,7 @@ const TEACHABLE_NLP_MODEL_URL =
 
 const inferenceHandler: NextApiHandler = async (request, response) => {
   const { body } = request;
-
-  console.log(body);
-
   const { data } = await axios.post(TEACHABLE_NLP_MODEL_URL, body);
-
-  // simulate IO latency
-  //await new Promise((resolve) => setTimeout(resolve, 500));
 
   response.json({ data });
 };

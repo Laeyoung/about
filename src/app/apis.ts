@@ -1,5 +1,5 @@
 const num_samples = 5;
-const length = 30;
+const length = 20;
 
 export async function fetchTeachableNLPInference(
   text: string,
