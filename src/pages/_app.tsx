@@ -1,5 +1,4 @@
 import '../styles/globals.css'
-import '../stories/typeformRadio.css'
 
 import { Provider } from 'react-redux'
 import type { AppProps } from 'next/app'
