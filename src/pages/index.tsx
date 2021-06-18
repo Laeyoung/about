@@ -2,6 +2,9 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 
 import Counter from '../features/counter/Counter'
+
+import { TypeformRadio } from '../stories/TypeformRadio'
+
 import styles from '../styles/Home.module.css'
 
 const IndexPage: NextPage = () => {
@@ -14,6 +17,14 @@ const IndexPage: NextPage = () => {
       <header className={styles.header}>
         <img src="/logo.svg" className={styles.logo} alt="logo" />
         <Counter />
+        <TypeformRadio
+          items={[
+            'In this tutorial, we will cover how to create a simple AngularJS project with three controllers.',
+            'I\'m sorry for how quickly we all arrived in here.'
+          ]}
+          onItemSelected={(index: number, text: string) => { console.log(index, text) }}
+        />
+
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>

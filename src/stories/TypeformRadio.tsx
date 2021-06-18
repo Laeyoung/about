@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import uuid from 'react-uuid';
 
-import './typeformradio.css';
+import './typeformradio.module.css';
 
 export interface TypeformRadioProps {
   backgroundColor?: string;
@@ -31,21 +31,21 @@ export const TypeformRadio: React.FC<TypeformRadioProps> = ({
   }
 
   return (
-    <form onChange={onChange}>
+    <form className="typeform-radio" onChange={onChange}>
       {
         items.map((item, index) => {
-          const id = uuid()
+          const key = uuid()
 
           return (
-            <div className="radiobtn" key={id}>
+            <div className="radiobtn" key={key}>
               <input
                 type="radio"
                 name='typeform-radio'
-                id={id}
+                id={`${index}`}
                 value={index}
                 defaultChecked={selected === index}
                 disabled={selected >= 0 && selected !== index}/>
-              <label htmlFor={id} style={{ backgroundColor, borderColor }}>{item}</label>
+              <label htmlFor={`${index}`} style={{ backgroundColor, borderColor }}>{item}</label>
             </div>
           )
         })
