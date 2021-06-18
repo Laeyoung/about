@@ -3,7 +3,7 @@ import Head from 'next/head'
 
 import Counter from '../features/counter/Counter'
 
-import { TypeformRadio } from '../stories/TypeformRadio'
+import { TypeformRadio } from '../components/TypeformRadio'
 
 import styles from '../styles/Home.module.css'
 
