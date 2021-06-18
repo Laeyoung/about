@@ -1,13 +1,33 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import type { NextPage } from 'next';
+import Head from 'next/head';
 
-import Counter from '../features/counter/Counter'
+import Counter from '../features/counter/Counter';
 
-import { TypeformRadio } from '../components/TypeformRadio'
+import { TypeformRadio } from '../components/TypeformRadio';
 
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.css';
+
+import { fetchTeachableNLPInference } from '../app/apis';
+import { useEffect, useState } from 'react';
+
+import _ from 'lodash';
+
+const initText = '커먼컴퓨터는';
 
 const IndexPage: NextPage = () => {
+  const [form, setForm] = useState([] as string[]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchTeachableNLPInference(initText);
+
+      console.log(JSON.stringify(data));
+
+      setForm(_.values(data) as string[]);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -15,16 +35,17 @@ const IndexPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className={styles.header}>
-        <img src="/logo.svg" className={styles.logo} alt="logo" />
-        <Counter />
-        <TypeformRadio
-          items={[
-            'In this tutorial, we will cover how to create a simple AngularJS project with three controllers.',
-            'I\'m sorry for how quickly we all arrived in here.'
-          ]}
-          onItemSelected={(index: number, text: string) => { console.log(index, text) }}
-        />
+        <p>{initText}</p>
+        {!_.isEmpty(form) && (
+          <TypeformRadio
+            items={form}
+            onItemSelected={(index: number, text: string) => {
+              console.log(index, text);
+            }}
+          />
+        )}
 
+        <Counter />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -68,7 +89,7 @@ const IndexPage: NextPage = () => {
         </span>
       </header>
     </div>
-  )
-}
+  );
+};
 
-export default IndexPage
+export default IndexPage;
