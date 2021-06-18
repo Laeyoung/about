@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React from 'react';
 
 import styles from '../styles/TypingText.module.scss';
 
