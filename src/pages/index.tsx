@@ -3,6 +3,7 @@ import Head from 'next/head';
 
 import Counter from '../features/counter/Counter';
 
+import { TypingText } from '../components/TypingText';
 import { TypeformRadio } from '../components/TypeformRadio';
 
 import styles from '../styles/Home.module.css';
@@ -40,15 +41,26 @@ const IndexPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className={styles.header}>
-        <p>{initText}</p>
-        {!_.isEmpty(form) && (
-          <TypeformRadio
-            items={form}
-            onItemSelected={(index: number, text: string) => {
-              console.log(index, text);
-            }}
-          />
-        )}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
+            margin: '10px',
+          }}
+        >
+          <TypingText text={initText} />
+          {!_.isEmpty(form) && (
+            <TypeformRadio
+              items={form}
+              onItemSelected={(index: number, text: string) => {
+                console.log(index, text);
+              }}
+            />
+          )}
+        </div>
 
         {/* <Counter />
         <p>

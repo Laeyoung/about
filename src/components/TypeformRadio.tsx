@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import styles from '../styles/Typeformradio.module.scss';
+import styles from '../styles/TypeformRadio.module.scss';
 
 export interface TypeformRadioProps {
   backgroundColor?: string;
