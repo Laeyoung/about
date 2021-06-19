@@ -51,7 +51,7 @@ const IndexPage: NextPage = () => {
             margin: '10px',
           }}
         >
-          <TypingText text={initText} />
+          <TypingText text={initText} isCJK={true} />
           {!_.isEmpty(form) && (
             <TypeformRadio
               items={form}
