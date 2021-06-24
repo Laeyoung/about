@@ -1,6 +1,9 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import { useEffect, useState } from 'react';
+import { useTransition, animated } from '@react-spring/web';
+
 //import Counter from '../features/counter/Counter';
 
 import { TypingText } from '../components/TypingText';
@@ -9,7 +12,6 @@ import { TypeformRadio } from '../components/TypeformRadio';
 import styles from '../styles/Home.module.css';
 
 import { fetchTeachableNLPInference } from '../app/apis';
-import { useEffect, useState } from 'react';
 
 import _ from 'lodash';
 
@@ -34,6 +36,14 @@ const IndexPage: NextPage = () => {
     fetchData();
   }, []);
 
+  const transitions = useTransition(!_.isEmpty(form), {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    delay: 100,
+    config: { duration: 400 },
+  });
+
   return (
     <div className={styles.container}>
       <Head>
@@ -52,13 +62,18 @@ const IndexPage: NextPage = () => {
           }}
         >
           <TypingText text={initText} isCJK={true} />
-          {!_.isEmpty(form) && (
-            <TypeformRadio
-              items={form}
-              onItemSelected={(index: number, text: string) => {
-                console.log(index, text);
-              }}
-            />
+          {transitions(
+            (_styles, item) =>
+              item && (
+                <animated.div style={_styles}>
+                  <TypeformRadio
+                    items={form}
+                    onItemSelected={(index: number, text: string) => {
+                      console.log(index, text);
+                    }}
+                  />
+                </animated.div>
+              ),
           )}
         </div>
 
