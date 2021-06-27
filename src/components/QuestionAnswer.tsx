@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTransition, animated } from '@react-spring/web';
 
 import classNames from 'classnames/bind';
@@ -23,7 +23,10 @@ export interface Answer {
 
 const cx = classNames.bind(styles);
 const className = cx('qa');
-
+const scrollIntoViewOption: ScrollIntoViewOptions = {
+  behavior: 'smooth',
+  block: 'center',
+};
 const transitionConfig = {
   from: { opacity: 0 },
   enter: { opacity: 1 },
@@ -37,9 +40,11 @@ export const QuestionAnswer: React.FC<QuestionAnswerProps> = ({
   onSelect,
 }) => {
   const [choices, setChoices] = useState([] as string[]);
-  const transitions = useTransition(!_.isEmpty(choices), transitionConfig);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    ref?.current?.scrollIntoView(scrollIntoViewOption);
+
     const fetchData = async () => {
       const data = await fetchTeachableNLPInference(question);
 
@@ -49,14 +54,17 @@ export const QuestionAnswer: React.FC<QuestionAnswerProps> = ({
           ? answer.substr(0, answer.indexOf('.') + 1)
           : answer;
       });
-
       setChoices(answers);
+
+      ref?.current?.scrollIntoView(scrollIntoViewOption);
     };
     fetchData();
   }, []);
 
+  const transitions = useTransition(!_.isEmpty(choices), transitionConfig);
+
   return (
-    <div className={className}>
+    <div className={className} ref={ref}>
       <TypingText text={question} />
       {transitions(
         (_styles, item) =>

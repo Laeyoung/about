@@ -10,7 +10,7 @@ import styles from '../styles/Home.module.css';
 //import Counter from '../features/counter/Counter';
 
 import { Answer, QuestionAnswer } from '../components/QuestionAnswer';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, MutableRefObject } from 'react';
 
 const NextQuestionQueue = [
   'AINetwork는',
@@ -22,7 +22,7 @@ function QuestionAnswerList(
   questions: string[],
   onSelectCallback: (answer: Answer) => void,
 ) {
-  return questions.map((question) => {
+  return questions.map((question, index) => {
     return (
       <QuestionAnswer
         key={stringHash(question)}
@@ -59,10 +59,8 @@ const IndexPage: NextPage = () => {
         <title>About ComCom</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className={styles.header}>
-        <div>{QuestionAnswerList(questions, onSelectCallback)}</div>
-
-        {/* <Counter />
+      {/* <header className={styles.header}>
+        <Counter />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -103,8 +101,11 @@ const IndexPage: NextPage = () => {
           >
             React Redux
           </a>
-        </span> */}
-      </header>
+        </span>
+      </header> */}
+      <div className={styles.body}>
+        {QuestionAnswerList(questions, onSelectCallback)}
+      </div>
     </div>
   );
 };
