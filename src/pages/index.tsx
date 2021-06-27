@@ -15,7 +15,7 @@ import { fetchTeachableNLPInference } from '../app/apis';
 
 import _ from 'lodash';
 
-const initText = '커먼컴퓨터는';
+const initText = '커먼컴퓨터는 AINetwork를';
 
 const IndexPage: NextPage = () => {
   const [form, setForm] = useState([] as string[]);
