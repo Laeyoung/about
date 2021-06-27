@@ -15,7 +15,7 @@ import { fetchTeachableNLPInference } from '../app/apis';
 
 import _ from 'lodash';
 
-const initText = '커먼컴퓨터는 AINetwork를';
+const initText = '커먼컴퓨터는';
 
 const IndexPage: NextPage = () => {
   const [form, setForm] = useState([] as string[]);
@@ -61,7 +61,7 @@ const IndexPage: NextPage = () => {
             margin: '10px',
           }}
         >
-          <TypingText text={initText} isCJK={true} />
+          <TypingText text={initText} />
           {transitions(
             (_styles, item) =>
               item && (

@@ -16,11 +16,9 @@ const Template: Story<TypingTextProps> = (args) => <TypingText {...args} />;
 export const English = Template.bind({});
 English.args = {
   text: 'Hello, World!',
-  isCJK: false,
 };
 
 export const Korean = Template.bind({});
 Korean.args = {
   text: '안녕하세요 세상이여',
-  isCJK: true,
 };

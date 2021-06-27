@@ -5,32 +5,21 @@ import styles from '../styles/TypingText.module.scss';
 
 export interface TypingTextProps {
   text: string;
-  isCJK?: boolean;
 }
 
 const cx = classNames.bind(styles);
+const typingClassName = cx('typing');
+const typingHiddenClassName = cx('typing--hidden');
 
-/**
- * Primary UI component for user interaction
- */
-export const TypingText: React.FC<TypingTextProps> = ({
-  text,
-  isCJK = false,
-}) => {
+export const TypingText: React.FC<TypingTextProps> = ({ text }) => {
   const [typingWidth, setTypingWidth] = useState('0px');
   const hiddenText = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    //const width = isCJK ? `${text.length * 1.5}ch` : `${text.length}ch`;
-    console.log(hiddenText?.current?.clientWidth);
-
-    const width = hiddenText?.current?.clientWidth ?? 0;
-
-    setTypingWidth(`${width + 5}px`);
+    const hiddenTextWidth = hiddenText?.current?.clientWidth ?? 0;
+    setTypingWidth(`${hiddenTextWidth + 5}px`); // add 5px Margin
   });
 
-  const typingClassName = cx('typing');
-  const typingHiddenClassName = cx('typing--hidden');
   const animation =
     `${typingClassName} ` +
     `${text.length * 0.1}s steps(${text.length}), ` +
