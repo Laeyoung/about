@@ -10,12 +10,14 @@ import styles from '../styles/Home.module.css';
 //import Counter from '../features/counter/Counter';
 
 import { Answer, QuestionAnswer } from '../components/QuestionAnswer';
-import { useCallback, useState, useRef, MutableRefObject } from 'react';
+import { useCallback, useState } from 'react';
 
 const NextQuestionQueue = [
-  'AINetwork는',
-  '현재 시리즈 A 투자를',
-  'Ainize가 뭔가요?',
+  'AINetwork 메인넷은',
+  'Ainize는',
+  'Teachable NLP를 이용하면,',
+  'aFan은 다양한',
+  '2021년의 커먼컴퓨터의 목표는',
 ];
 
 function QuestionAnswerList(
