@@ -1,49 +1,22 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import { useEffect, useState } from 'react';
-import { useTransition, animated } from '@react-spring/web';
-
-//import Counter from '../features/counter/Counter';
-
-import { TypingText } from '../components/TypingText';
-import { TypeformRadio } from '../components/TypeformRadio';
+import _ from 'lodash';
 
 import styles from '../styles/Home.module.css';
 
-import { fetchTeachableNLPInference } from '../app/apis';
+//import Counter from '../features/counter/Counter';
 
-import _ from 'lodash';
+import { QuestionAnswer } from '../components/QuestionAnswer';
 
-const initText = '커먼컴퓨터는';
+const questionList = [
+  '커먼컴퓨터는',
+  'AINetwork는',
+  '현재 시리즈 A 투자를',
+  'Ainize가 뭔가요?',
+];
 
 const IndexPage: NextPage = () => {
-  const [form, setForm] = useState([] as string[]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchTeachableNLPInference(initText);
-
-      const answers = (_.values(data) as string[]).map((answer) => {
-        const dotIndex = answer.indexOf('.');
-        return dotIndex > 0
-          ? answer.substr(0, answer.indexOf('.') + 1)
-          : answer;
-      });
-
-      setForm(answers);
-    };
-    fetchData();
-  }, []);
-
-  const transitions = useTransition(!_.isEmpty(form), {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-    delay: 100,
-    config: { duration: 400 },
-  });
-
   return (
     <div className={styles.container}>
       <Head>
@@ -51,31 +24,7 @@ const IndexPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className={styles.header}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignContent: 'center',
-            alignItems: 'center',
-            margin: '10px',
-          }}
-        >
-          <TypingText text={initText} />
-          {transitions(
-            (_styles, item) =>
-              item && (
-                <animated.div style={_styles}>
-                  <TypeformRadio
-                    items={form}
-                    onItemSelected={(index: number, text: string) => {
-                      console.log(index, text);
-                    }}
-                  />
-                </animated.div>
-              ),
-          )}
-        </div>
+        <QuestionAnswer question={questionList[0]} />
 
         {/* <Counter />
         <p>
