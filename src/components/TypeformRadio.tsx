@@ -24,34 +24,34 @@ export const TypeformRadio: React.FC<TypeformRadioProps> = ({
   onItemSelected,
 }) => {
   const [selected, setSelected] = useState(-1);
+  const [formKey] = useState(uuidv4());
 
   const onChange = (event: React.FormEvent<HTMLFormElement>) => {
     const index: number = parseInt((event.target as HTMLInputElement).value);
     const text = items[index];
 
-    onItemSelected && onItemSelected(index, text);
+    if (onItemSelected) onItemSelected(index, text);
     setSelected(index);
   };
 
+  const formName = `typeform-radio-${formKey}`;
+
   return (
-    <form className={cx('form')} onChange={onChange}>
+    <form className={cx('form')} onChange={onChange} key={formKey}>
       {items.map((item, index) => {
-        const key = uuidv4();
+        const id = `${formKey}-${index}`;
 
         return (
-          <div className={cx('radiobtn')} key={key}>
+          <div className={cx('radiobtn')} key={id}>
             <input
               type="radio"
-              name="typeform-radio"
-              id={`${index}`}
+              name={formName}
+              id={id}
               value={index}
               defaultChecked={selected === index}
               disabled={selected >= 0 && selected !== index}
             />
-            <label
-              htmlFor={`${index}`}
-              style={{ backgroundColor, borderColor }}
-            >
+            <label htmlFor={id} style={{ backgroundColor, borderColor }}>
               {item}
             </label>
           </div>

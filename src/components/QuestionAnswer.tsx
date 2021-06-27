@@ -13,6 +13,12 @@ import { fetchTeachableNLPInference } from '../app/apis';
 
 export interface QuestionAnswerProps {
   question: string;
+  onSelect?: (answer: Answer) => void;
+}
+export interface Answer {
+  question: string;
+  choices: string[];
+  answer: string;
 }
 
 const cx = classNames.bind(styles);
@@ -26,9 +32,12 @@ const transitionConfig = {
   config: { duration: 400 },
 };
 
-export const QuestionAnswer: React.FC<QuestionAnswerProps> = ({ question }) => {
-  const [form, setForm] = useState([] as string[]);
-  const transitions = useTransition(!_.isEmpty(form), transitionConfig);
+export const QuestionAnswer: React.FC<QuestionAnswerProps> = ({
+  question,
+  onSelect,
+}) => {
+  const [choices, setChoices] = useState([] as string[]);
+  const transitions = useTransition(!_.isEmpty(choices), transitionConfig);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +50,7 @@ export const QuestionAnswer: React.FC<QuestionAnswerProps> = ({ question }) => {
           : answer;
       });
 
-      setForm(answers);
+      setChoices(answers);
     };
     fetchData();
   }, []);
@@ -54,9 +63,14 @@ export const QuestionAnswer: React.FC<QuestionAnswerProps> = ({ question }) => {
           item && (
             <animated.div style={_styles}>
               <TypeformRadio
-                items={form}
+                items={choices}
                 onItemSelected={(index: number, text: string) => {
-                  console.log(index, text);
+                  if (onSelect)
+                    onSelect({
+                      question: question,
+                      choices: choices,
+                      answer: text,
+                    });
                 }}
               />
             </animated.div>
