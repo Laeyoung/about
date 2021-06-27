@@ -72,7 +72,7 @@ export const QuestionAnswer: React.FC<QuestionAnswerProps> = ({
             <animated.div style={_styles}>
               <TypeformRadio
                 items={choices}
-                onItemSelected={(index: number, text: string) => {
+                onItemSelected={(_index: number, text: string) => {
                   if (onSelect)
                     onSelect({
                       question: question,

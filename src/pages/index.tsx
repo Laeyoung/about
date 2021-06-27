@@ -24,7 +24,7 @@ function QuestionAnswerList(
   questions: string[],
   onSelectCallback: (answer: Answer) => void,
 ) {
-  return questions.map((question, index) => {
+  return questions.map((question) => {
     return (
       <QuestionAnswer
         key={stringHash(question)}
