@@ -13,11 +13,10 @@ import { Answer, QuestionAnswer } from '../components/QuestionAnswer';
 import { useCallback, useState } from 'react';
 
 const NextQuestionQueue = [
-  'AINetwork 메인넷은',
-  'Ainize는',
-  'Teachable NLP를 이용하면,',
-  'aFan은 다양한',
-  '2021년의 커먼컴퓨터의 목표는',
+  '오늘은 무슨 일이',
+  '대학생 때 공부를',
+  '재미있는 일은 뭐가 있었을까요?',
+  '스타리그',
 ];
 
 function QuestionAnswerList(
@@ -36,7 +35,7 @@ function QuestionAnswerList(
 }
 
 const IndexPage: NextPage = () => {
-  const [questions, setQuestions] = useState(['커먼컴퓨터는']);
+  const [questions, setQuestions] = useState(['안녕하세요?']);
   const [answers, setAnswers] = useState([] as Answer[]);
   const onSelectCallback = useCallback(
     (answer: Answer) => {
