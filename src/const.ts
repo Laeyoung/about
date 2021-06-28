@@ -1,0 +1,2 @@
+export const INFERENCE_NUM_OF_CHOICES = 5;
+export const INFERENCE_CHOICE_MAX_LENGTH = 25;

@@ -5,11 +5,10 @@ import { v4 as uuidv4 } from 'uuid';
 import styles from '../styles/Typeformradio.module.scss';
 
 export interface TypeformRadioProps {
+  items: string[];
+  onItemSelected?: (index: number, text: string) => void;
   backgroundColor?: string;
   borderColor?: string;
-  items: string[];
-
-  onItemSelected?: (index: number, text: string) => void;
 }
 
 const cx = classNames.bind(styles);
@@ -18,10 +17,10 @@ const cx = classNames.bind(styles);
  * Primary UI component for user interaction
  */
 export const TypeformRadio: React.FC<TypeformRadioProps> = ({
-  backgroundColor = '#fee8c3',
-  borderColor = '#fdd591',
   items = [],
   onItemSelected,
+  backgroundColor = undefined,
+  borderColor = undefined,
 }) => {
   const [selected, setSelected] = useState(-1);
   const [formKey] = useState(uuidv4());
@@ -35,6 +34,7 @@ export const TypeformRadio: React.FC<TypeformRadioProps> = ({
   };
 
   const formName = `typeform-radio-${formKey}`;
+  const customLabelStyle = { backgroundColor, borderColor };
 
   return (
     <form className={cx('form')} onChange={onChange} key={formKey}>
@@ -51,7 +51,7 @@ export const TypeformRadio: React.FC<TypeformRadioProps> = ({
               defaultChecked={selected === index}
               disabled={selected >= 0 && selected !== index}
             />
-            <label htmlFor={id} style={{ backgroundColor, borderColor }}>
+            <label htmlFor={id} style={customLabelStyle}>
               {item}
             </label>
           </div>

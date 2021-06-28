@@ -1,6 +1,4 @@
-$accentcolor: #fcae2c;
-$lightcolor: #fff;
-$darkcolor: #444;
+@import 'ComponentConst.module.scss';
 
 .form {
   max-width: max-content;
@@ -23,11 +21,11 @@ $darkcolor: #444;
   display: block;
   label {
     display: block;
-    background: lighten($accentcolor, 30%);
-    color: $darkcolor;
+    background: lighten($typeformAccentColor, 30%);
+    color: $typeformLabelColor;
     border-radius: 5px;
     padding: 10px 40px 10px 10px;
-    border: 2px solid lighten($accentcolor, 20%);
+    border: 2px solid lighten($typeformAccentColor, 20%);
     margin-bottom: 5px;
     cursor: pointer;
     &:after,
@@ -39,7 +37,7 @@ $darkcolor: #444;
       width: 20px;
       height: 20px;
       border-radius: 3px;
-      background: lighten($accentcolor, 15%);
+      background: lighten($typeformAccentColor, 15%);
     }
     &:before {
       background: transparent;
@@ -67,12 +65,12 @@ $darkcolor: #444;
     width: 100%;
     appearance: none;
     &:checked + label {
-      background: lighten($accentcolor, 15%);
+      background: lighten($typeformAccentColor, 15%);
       animation-name: blink;
       animation-duration: 1s;
-      border-color: $accentcolor;
+      border-color: $typeformAccentColor;
       &:after {
-        background: $accentcolor;
+        background: $typeformAccentColor;
       }
       &:before {
         width: 20px;
@@ -84,30 +82,30 @@ $darkcolor: #444;
 
 @keyframes blink {
   0% {
-    background-color: lighten($accentcolor, 15%);
+    background-color: lighten($typeformAccentColor, 15%);
   }
   10% {
-    background-color: lighten($accentcolor, 15%);
+    background-color: lighten($typeformAccentColor, 15%);
   }
   11% {
-    background-color: lighten($accentcolor, 20%);
+    background-color: lighten($typeformAccentColor, 20%);
   }
   29% {
-    background-color: lighten($accentcolor, 20%);
+    background-color: lighten($typeformAccentColor, 20%);
   }
   30% {
-    background-color: lighten($accentcolor, 15%);
+    background-color: lighten($typeformAccentColor, 15%);
   }
   50% {
-    background-color: lighten($accentcolor, 20%);
+    background-color: lighten($typeformAccentColor, 20%);
   }
   45% {
-    background-color: lighten($accentcolor, 15%);
+    background-color: lighten($typeformAccentColor, 15%);
   }
   50% {
-    background-color: lighten($accentcolor, 20%);
+    background-color: lighten($typeformAccentColor, 20%);
   }
   100% {
-    background-color: lighten($accentcolor, 15%);
+    background-color: lighten($typeformAccentColor, 15%);
   }
 }
