@@ -49,7 +49,9 @@ function QuestionAnswerList(
 }
 
 const IndexPage: NextPage = () => {
-  const [questions, setQuestions] = useState([NextQuestionQueue.shift()]);
+  const [questions, setQuestions] = useState([
+    NextQuestionQueue.shift() ?? 'Test question?',
+  ]);
   const [answers, setAnswers] = useState([] as Answer[]);
   const onSelectCallback = useCallback(
     (answer: Answer) => {
