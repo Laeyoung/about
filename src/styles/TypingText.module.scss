@@ -1,11 +1,12 @@
 .typing {
-  width: 9ch;
+  width: 0ch;
+  max-width: 92vw;
   white-space: nowrap;
   overflow: hidden;
   border-right: 3px solid;
-  font-family: monospace;
-  font-size: 1.4em;
-  margin: 16px;
+  //font-family: monospace;
+  font-size: 1em;
+  margin: 16px 0px;
 
   &--hidden {
     @extend .typing;

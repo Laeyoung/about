@@ -22,7 +22,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(9px + 2vmin);
+}
+
+.description {
+  margin-top: 70px;
+  font-size: 0.8em;
+  white-space: pre-wrap;
+  color: #303030;
+}
+
+@media only screen and (min-width: 600px) {
+  .description {
+    margin-top: 80px;
+  }
 }
 
 .link {
