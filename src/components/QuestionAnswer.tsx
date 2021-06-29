@@ -49,10 +49,19 @@ export const QuestionAnswer: React.FC<QuestionAnswerProps> = ({
       const data = await fetchTeachableNLPInference(question);
 
       const answers = (_.values(data) as string[]).map((answer) => {
-        const dotIndex = answer.indexOf('.');
+        const answerRemoveQuestion = answer
+          .replace(question, '')
+          .replace('"', '')
+          .replace('\n', ' ');
+
+        const dotIndex = answerRemoveQuestion.lastIndexOf('. ');
+
         return dotIndex > 0
-          ? answer.substr(0, answer.indexOf('.') + 1)
-          : answer;
+          ? answerRemoveQuestion.substr(
+              0,
+              answerRemoveQuestion.indexOf('. ') + 2,
+            )
+          : answerRemoveQuestion;
       });
       setChoices(answers);
 

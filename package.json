@@ -12,10 +12,13 @@
     "stylelint": "stylelint src/styles"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "@react-spring/web": "^9.2.3",
     "@reduxjs/toolkit": "^1.6.0",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
+    "detect-browser": "^5.2.0",
     "immer": "^9.0.3",
     "lodash": "^4.17.21",
     "next": "latest",

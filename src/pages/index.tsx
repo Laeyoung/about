@@ -1,23 +1,37 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import { useCallback, useState, useMemo, useRef } from 'react';
+
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+
 import stringHash from 'string-hash';
 import produce from 'immer';
 import _ from 'lodash';
 
 import styles from '../styles/Home.module.css';
 
-//import Counter from '../features/counter/Counter';
-
+import { Questions } from '../const';
 import { Answer, QuestionAnswer } from '../components/QuestionAnswer';
-import { useCallback, useState } from 'react';
 
-const NextQuestionQueue = [
-  '오늘은 무슨 일이',
-  '대학생 때 공부를',
-  '재미있는 일은 뭐가 있었을까요?',
-  '스타리그',
-];
+const QuestionQueue = [...Questions];
+const FIRST_QUESTION = QuestionQueue.shift() as string;
+
+const useAppBarStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+  offset: theme.mixins.toolbar,
+}));
 
 function QuestionAnswerList(
   questions: string[],
@@ -35,13 +49,15 @@ function QuestionAnswerList(
 }
 
 const IndexPage: NextPage = () => {
-  const [questions, setQuestions] = useState(['안녕하세요?']);
+  const [questions, setQuestions] = useState([FIRST_QUESTION]);
   const [answers, setAnswers] = useState([] as Answer[]);
+  const ref = useRef<HTMLDivElement>(null);
+
   const onSelectCallback = useCallback(
     (answer: Answer) => {
       setQuestions(
         produce(questions, (draft) => {
-          const nextQuestion = NextQuestionQueue.shift();
+          const nextQuestion = QuestionQueue.shift();
           if (nextQuestion) draft.push(nextQuestion);
         }),
       );
@@ -53,6 +69,19 @@ const IndexPage: NextPage = () => {
     },
     [questions],
   );
+  const isAllQuestionDone = useMemo(() => {
+    if (QuestionQueue.length > 0) return false;
+    if (answers.length < questions.length) return false;
+
+    ref?.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+
+    return true;
+  }, [answers]);
+
+  const appBarClasses = useAppBarStyles();
 
   return (
     <div className={styles.container}>
@@ -60,52 +89,59 @@ const IndexPage: NextPage = () => {
         <title>About ComCom</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <header className={styles.header}>
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className={styles.link}
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className={styles.link}
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className={styles.link}
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className={styles.link}
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header> */}
+      <AppBar position="fixed" style={{ background: '#d72a2a' }}>
+        <Toolbar>
+          <Typography variant="h5" className={appBarClasses.title}>
+            래영에 관하여
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <div className={styles.body}>
+        <div className={styles.description}>
+          15년 전, 래영에게 물어보았다 🤔
+          <br />
+          2003년에서 2006년 사이에 쓴 글들로 AI를 학습 시켰습니다.
+        </div>
         {QuestionAnswerList(questions, onSelectCallback)}
+        <div
+          className={styles.lastMessageFooter}
+          ref={ref}
+          style={{
+            visibility: isAllQuestionDone ? 'visible' : 'hidden',
+          }}
+        >
+          <p>
+            <br />
+            2021년 현재의 👨‍💻 저에 대해 알고 싶으신가요?
+          </p>
+          <span>
+            <a
+              className={styles.link}
+              href="https://brunch.co.kr/@laeyoung"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              2021년으로 타임 워프 🧐
+            </a>
+          </span>
+          <p>
+            <br />
+            나에 대한 AI를 한번 만들어 보실래요?
+            <br />
+            텍스트 데이터만 있으면, 단 5분 만에 만들 수 있어요!
+          </p>
+          <span>
+            <a
+              className={styles.link}
+              href="https://forum.ainetwork.ai/t/teachable-nlp-ai/142"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              만들어보기 😎
+            </a>
+            <br />
+          </span>
+        </div>
       </div>
     </div>
   );
