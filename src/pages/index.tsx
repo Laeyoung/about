@@ -38,7 +38,7 @@ const NextQuestionQueue = [
 ];
 const FIRST_QUESTION = NextQuestionQueue.shift() as string;
 
-const useStyles = makeStyles((theme) => ({
+const useAppBarStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -67,6 +67,8 @@ function QuestionAnswerList(
 }
 
 const IndexPage: NextPage = () => {
+  const appBarClasses = useAppBarStyles();
+
   const [questions, setQuestions] = useState([FIRST_QUESTION]);
   const [answers, setAnswers] = useState([] as Answer[]);
   const onSelectCallback = useCallback(
@@ -88,8 +90,6 @@ const IndexPage: NextPage = () => {
     [questions],
   );
 
-  const classes = useStyles();
-
   return (
     <div className={styles.container}>
       <Head>
@@ -98,7 +98,7 @@ const IndexPage: NextPage = () => {
       </Head>
       <AppBar position="fixed" style={{ background: '#764fcd' }}>
         <Toolbar>
-          <Typography variant="h5" className={classes.title}>
+          <Typography variant="h5" className={appBarClasses.title}>
             커먼컴퓨터에 관하여
           </Typography>
         </Toolbar>
