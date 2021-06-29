@@ -38,6 +38,12 @@
   }
 }
 
+.bottomEmptyBox {
+  height: 40vh;
+  width: 0px;
+  visibility: hidden;
+}
+
 .link {
   color: rgb(112, 76, 182);
 }

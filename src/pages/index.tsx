@@ -110,6 +110,7 @@ const IndexPage: NextPage = () => {
           여러분이 생각하시는 커먼컴퓨터는 어떤 모습에 가깝나요? 🤔
         </div>
         {QuestionAnswerList(questions, onSelectCallback)}
+        <div className={styles.bottomEmptyBox}></div>
       </div>
     </div>
   );
