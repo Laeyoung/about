@@ -38,10 +38,12 @@
   }
 }
 
-.bottomEmptyBox {
+.lastMessageFooter {
   height: 40vh;
-  width: 0px;
-  visibility: hidden;
+  /* width: min-content; */
+  width: 80vw;
+  background-color: lawngreen;
+  visibility: visible;
 }
 
 .link {

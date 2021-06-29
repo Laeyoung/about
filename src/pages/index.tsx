@@ -1,6 +1,8 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import { useCallback, useState, useMemo } from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,19 +17,18 @@ import styles from '../styles/Home.module.css';
 //import Counter from '../features/counter/Counter';
 
 import { Answer, QuestionAnswer } from '../components/QuestionAnswer';
-import { useCallback, useState } from 'react';
 
 const NextQuestionQueue = [
   '커먼컴퓨터는 어떤 것들을 만드는 곳인가요?',
-  '커먼컴퓨터를 어떻게 시작하게 되셨나요?',
-  '커먼컴퓨터를 시작하기 전에는 어떤 일을 하셨나요?',
-  'AI Writer는 어떻게 시작된 서비스인가요?',
-  '서비스를 만들면서 겪는 가장 큰 어려움은 뭔가요?',
-  '커먼컴퓨터의 앞으로 목표는 뭔가요?',
-  '커먼컴퓨터의 비젼은 뭔가요?',
-  '커먼컴퓨터가 겪는 가장 큰 챌린지는 뭔가요?',
-  '커먼컴퓨터의 팀문화는 어떠한가요?',
-  '커먼컴퓨터가 현재 찾고 있는 팀원이 있나요?',
+  // '커먼컴퓨터를 어떻게 시작하게 되셨나요?',
+  // '커먼컴퓨터를 시작하기 전에는 어떤 일을 하셨나요?',
+  // 'AI Writer는 어떻게 시작된 서비스인가요?',
+  // '서비스를 만들면서 겪는 가장 큰 어려움은 뭔가요?',
+  // '커먼컴퓨터의 앞으로 목표는 뭔가요?',
+  // '커먼컴퓨터의 비젼은 뭔가요?',
+  // '커먼컴퓨터가 겪는 가장 큰 챌린지는 뭔가요?',
+  // '커먼컴퓨터의 팀문화는 어떠한가요?',
+  // '커먼컴퓨터가 현재 찾고 있는 팀원이 있나요?',
 
   // '커먼컴퓨터는',
   // 'AINetwork 메인넷은',
@@ -76,8 +77,6 @@ const IndexPage: NextPage = () => {
       setQuestions(
         produce(questions, (draft) => {
           const nextQuestion = NextQuestionQueue.shift();
-          console.log(nextQuestion);
-          console.log(questions.length);
           if (nextQuestion) draft.push(nextQuestion);
         }),
       );
@@ -89,6 +88,12 @@ const IndexPage: NextPage = () => {
     },
     [questions],
   );
+  const isAllQuestionDone = useMemo(() => {
+    if (NextQuestionQueue.length > 0) return false;
+    if (answers.length < questions.length) return false;
+
+    return true;
+  }, [answers]);
 
   return (
     <div className={styles.container}>
@@ -110,7 +115,14 @@ const IndexPage: NextPage = () => {
           여러분이 생각하시는 커먼컴퓨터는 어떤 모습에 가깝나요? 🤔
         </div>
         {QuestionAnswerList(questions, onSelectCallback)}
-        <div className={styles.bottomEmptyBox}></div>
+        <div
+          className={styles.lastMessageFooter}
+          style={{
+            visibility: isAllQuestionDone ? 'visible' : 'hidden',
+          }}
+        >
+          커먼컴퓨터에 대해 더 알아보고 싶으신가요?
+        </div>
       </div>
     </div>
   );
