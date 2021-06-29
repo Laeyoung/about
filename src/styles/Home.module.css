@@ -40,10 +40,8 @@
 
 .lastMessageFooter {
   height: 40vh;
-  /* width: min-content; */
-  width: 80vw;
-  background-color: lawngreen;
-  visibility: visible;
+  width: 95vw;
+  visibility: hidden;
 }
 
 .link {

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useState, useMemo, useRef } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,30 +14,11 @@ import _ from 'lodash';
 
 import styles from '../styles/Home.module.css';
 
-//import Counter from '../features/counter/Counter';
-
+import { Questions } from '../const';
 import { Answer, QuestionAnswer } from '../components/QuestionAnswer';
 
-const NextQuestionQueue = [
-  '커먼컴퓨터는 어떤 것들을 만드는 곳인가요?',
-  // '커먼컴퓨터를 어떻게 시작하게 되셨나요?',
-  // '커먼컴퓨터를 시작하기 전에는 어떤 일을 하셨나요?',
-  // 'AI Writer는 어떻게 시작된 서비스인가요?',
-  // '서비스를 만들면서 겪는 가장 큰 어려움은 뭔가요?',
-  // '커먼컴퓨터의 앞으로 목표는 뭔가요?',
-  // '커먼컴퓨터의 비젼은 뭔가요?',
-  // '커먼컴퓨터가 겪는 가장 큰 챌린지는 뭔가요?',
-  // '커먼컴퓨터의 팀문화는 어떠한가요?',
-  // '커먼컴퓨터가 현재 찾고 있는 팀원이 있나요?',
-
-  // '커먼컴퓨터는',
-  // 'AINetwork 메인넷은',
-  // 'Ainize는',
-  // 'Teachable NLP를 이용하면,',
-  // 'aFan은 다양한',
-  // '2021년의 커먼컴퓨터의 목표는',
-];
-const FIRST_QUESTION = NextQuestionQueue.shift() as string;
+const QuestionQueue = [...Questions];
+const FIRST_QUESTION = QuestionQueue.shift() as string;
 
 const useAppBarStyles = makeStyles((theme) => ({
   root: {
@@ -68,15 +49,15 @@ function QuestionAnswerList(
 }
 
 const IndexPage: NextPage = () => {
-  const appBarClasses = useAppBarStyles();
-
   const [questions, setQuestions] = useState([FIRST_QUESTION]);
   const [answers, setAnswers] = useState([] as Answer[]);
+  const ref = useRef<HTMLDivElement>(null);
+
   const onSelectCallback = useCallback(
     (answer: Answer) => {
       setQuestions(
         produce(questions, (draft) => {
-          const nextQuestion = NextQuestionQueue.shift();
+          const nextQuestion = QuestionQueue.shift();
           if (nextQuestion) draft.push(nextQuestion);
         }),
       );
@@ -89,11 +70,18 @@ const IndexPage: NextPage = () => {
     [questions],
   );
   const isAllQuestionDone = useMemo(() => {
-    if (NextQuestionQueue.length > 0) return false;
+    if (QuestionQueue.length > 0) return false;
     if (answers.length < questions.length) return false;
+
+    ref?.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
 
     return true;
   }, [answers]);
+
+  const appBarClasses = useAppBarStyles();
 
   return (
     <div className={styles.container}>
@@ -117,11 +105,42 @@ const IndexPage: NextPage = () => {
         {QuestionAnswerList(questions, onSelectCallback)}
         <div
           className={styles.lastMessageFooter}
+          ref={ref}
           style={{
             visibility: isAllQuestionDone ? 'visible' : 'hidden',
           }}
         >
-          커먼컴퓨터에 대해 더 알아보고 싶으신가요?
+          <p>
+            <br />
+            👩‍💻👨‍💻 커먼컴퓨터에 대해 더 알고 싶으신가요?
+          </p>
+          <span>
+            <a
+              className={styles.link}
+              href="https://comcom.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              더 자세히 알아보기 🧐
+            </a>
+          </span>
+          <p>
+            <br />
+            나에 대한 AI를 한번 만들어 보실래요?
+            <br />
+            텍스트 데이터만 있으면, 단 5분 만에 만들 수 있어요!
+          </p>
+          <span>
+            <a
+              className={styles.link}
+              href="https://forum.ainetwork.ai/t/teachable-nlp-ai/142"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              만들어보기 😎
+            </a>
+            <br />
+          </span>
         </div>
       </div>
     </div>
